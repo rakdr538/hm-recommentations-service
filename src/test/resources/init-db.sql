@@ -74,15 +74,27 @@ CREATE TABLE IF NOT EXISTS variations (
    product_thumbnails TEXT [],
    sku BIGINT NOT NULL,
    brand VARCHAR (5) NOT NULL,
-   original_price DECIMAL NOT NULL
+   original_price DECIMAL NOT NULL,
+   name VARCHAR(255)
 );
+
+INSERT INTO variations (product_size, product_code, product_color, sku, brand, original_price, name)
+VALUES
+    ('S', 'HM1234', 'black', 1000, 'HM', 199, 'socks'),
+    ('M', 'HM12345', 'red', 1000, 'HM', 199, 'socks'),
+    ('S', 'HM234', 'black', 10, 'HM', 599, 'pants'),
+    ('L', 'HM2345', 'red', 10, 'HM', 599, 'pants'),
+    ('S', 'HM342', 'black', 20, 'HM', 599, 'shirt'),
+    ('M', 'HM3421', 'red', 200, 'HM', 599, 'shirt'),
+    ('S', 'HM3422', 'black', 200, 'HM', 1599, 'Monster Dress'),
+    ('S', 'HM3423', 'red', 200, 'HM', 1599, 'Spider-man Dress');
 
 CREATE TABLE IF NOT EXISTS products (
    product_id SERIAL PRIMARY KEY,
    category_id INT NOT NULL,
    occasion_id INT,
    promotion_id INT,
-   variation_id INT,
+   variation_id INT NOT NULL,
    discounted_price DECIMAL NOT NULL,
    description TEXT,
    inStock Boolean NOT NULL,

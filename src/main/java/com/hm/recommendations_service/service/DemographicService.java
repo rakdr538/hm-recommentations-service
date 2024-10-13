@@ -1,6 +1,6 @@
 package com.hm.recommendations_service.service;
 
-import com.hm.recommendations_service.model.data.Demographic;
+import com.hm.recommendations_service.model.DAO.Demographic;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.hm.recommendations_service.model.data;
+package com.hm.recommendations_service.model.DAO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,17 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name="demographics")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
+@Table(name = "demographics")
 public class Demographic {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "demographic_id")
-    private Integer id;
+    private Integer demographicId;
 
     @Column(name = "gender")
     private String gender;
@@ -28,7 +28,6 @@ public class Demographic {
     private Integer toAge;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "promotion_id", referencedColumnName = "promotion_id")
+    @PrimaryKeyJoinColumn
     private Promotion promotion;
-
 }

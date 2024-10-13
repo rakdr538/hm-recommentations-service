@@ -1,4 +1,4 @@
-package com.hm.recommendations_service.model.data;
+package com.hm.recommendations_service.model.DAO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class Promotion {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "promotion_id")
-    private Integer id;
+    private Integer promotionId;
 
     private String name;
 
