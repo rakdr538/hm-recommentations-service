@@ -45,24 +45,22 @@ CREATE TABLE IF NOT EXISTS category (
    description TEXT,
    image_url TEXT,
    thumbnail_url TEXT,
-   demographic_id INT,
+   demographic_id INT [],
    promotion_id INT,
-   CONSTRAINT fk_category_promotion_id FOREIGN KEY (promotion_id) REFERENCES promotions(promotion_id),
-   CONSTRAINT fk_category_demographic_id FOREIGN KEY (demographic_id) REFERENCES demographics(demographic_id)
+   CONSTRAINT fk_category_promotion_id FOREIGN KEY (promotion_id) REFERENCES promotions(promotion_id)
 );
 
 CREATE TABLE IF NOT EXISTS occasion (
    occasion_id SERIAL PRIMARY KEY,
-   type VARCHAR (255) UNIQUE NOT NULL,
+   type VARCHAR (255) NOT NULL,
    name TEXT,
    description TEXT,
    promotion_id INT,
    occasion_start TIMESTAMP,
    occasion_end TIMESTAMP,
    season VARCHAR (255),
-   country_id INT,
-   CONSTRAINT fk_occasion_promotion_id FOREIGN KEY (promotion_id) REFERENCES promotions(promotion_id),
-   CONSTRAINT fk_occasion_country_id FOREIGN KEY (country_id) REFERENCES country(country_id)
+   country_id INT [],
+   CONSTRAINT fk_occasion_promotion_id FOREIGN KEY (promotion_id) REFERENCES promotions(promotion_id)
 );
 
 CREATE TABLE IF NOT EXISTS variations (

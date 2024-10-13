@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,9 +36,9 @@ public class Category {
     @Column(name = "image_url")
     private String image_url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "demographic_id", referencedColumnName = "demographic_id")
-    private Demographic demographic;
+    @Column(name = "demographic_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "demographicId")
+    private List<Demographic> demographic;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn

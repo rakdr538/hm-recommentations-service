@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -46,8 +47,7 @@ public class Occasion {
     @Column(name = "season")
     private String season;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id", referencedColumnName = "country_id")
-    private Country country;
+    @Column(name = "country_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryId")
+    private List<Country> country;
 }
