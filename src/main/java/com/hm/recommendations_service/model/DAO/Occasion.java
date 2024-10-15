@@ -7,8 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -48,6 +50,6 @@ public class Occasion {
     private String season;
 
     @Column(name = "country_id")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryId")
-    private List<Country> country;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryId", orphanRemoval = true)
+    private List<Country> countries = new ArrayList<>();
 }

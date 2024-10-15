@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,13 +23,13 @@ public class Product {
     private Integer productId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
-    private Category category;
+    @Column(name = "category_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoryId", orphanRemoval = true)
+    private List<Category> category = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "occasion_id", referencedColumnName = "occasion_id")
-    private Occasion occasion;
+    @Column(name = "occasion_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "occasionId", orphanRemoval = true)
+    private List<Occasion> occasion = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
@@ -45,7 +48,7 @@ public class Product {
     private String description;
 
     @NotNull
-    @Column(name = "inStock")
+    @Column(name = "in_stock")
     private Boolean inStock;
 }
 

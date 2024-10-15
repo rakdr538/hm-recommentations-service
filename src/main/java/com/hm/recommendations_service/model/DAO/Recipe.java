@@ -1,12 +1,14 @@
 package com.hm.recommendations_service.model.DAO;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,9 +23,14 @@ public class Recipe {
     @Column(name = "recipe_id")
     private Integer recipeId;
 
-    @Column(name = "products")
+    @NotNull
+    @NotEmpty
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "product_id")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productId")
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     @NotNull
     @Column(name = "recipe_original_price")
@@ -37,7 +44,7 @@ public class Recipe {
     @PrimaryKeyJoinColumn
     private Promotion promotion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "occasion_id", referencedColumnName = "occasion_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private Occasion occasion;
 }

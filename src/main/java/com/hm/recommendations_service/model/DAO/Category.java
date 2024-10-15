@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,7 +21,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Integer category_id;
+    private Integer categoryId;
 
     @NotNull
     @NotEmpty
@@ -37,8 +38,8 @@ public class Category {
     private String image_url;
 
     @Column(name = "demographic_id")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "demographicId")
-    private List<Demographic> demographic;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "demographicId", orphanRemoval = true)
+    private List<Demographic> demographics = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn

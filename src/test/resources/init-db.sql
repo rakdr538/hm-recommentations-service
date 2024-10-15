@@ -36,8 +36,7 @@ VALUES
     ('male', 13, 18),
     ('female', 13, 18),
     ('female', 20, 50),
-    ('male', 18, 60),
-    ('all', 20, 200);
+    ('male', 18, 60);
 
 CREATE TABLE IF NOT EXISTS category (
    category_id SERIAL PRIMARY KEY,
@@ -89,22 +88,21 @@ VALUES
 
 CREATE TABLE IF NOT EXISTS products (
    product_id SERIAL PRIMARY KEY,
-   category_id INT NOT NULL,
-   occasion_id INT,
+   category_id INT [],
+   occasion_id INT [],
    promotion_id INT,
    variation_id INT NOT NULL,
    discounted_price DECIMAL NOT NULL,
    description TEXT,
-   inStock Boolean NOT NULL,
-   CONSTRAINT fk_products_category_id FOREIGN KEY (category_id) REFERENCES category(category_id),
-   CONSTRAINT fk_products_occasion_id FOREIGN KEY (occasion_id) REFERENCES occasion(occasion_id),
+   in_stock Boolean NOT NULL,
    CONSTRAINT fk_products_promotion_id FOREIGN KEY (promotion_id) REFERENCES promotions(promotion_id),
    CONSTRAINT fk_products_variation_id FOREIGN KEY (variation_id) REFERENCES variations(variation_id)
 );
 
 CREATE TABLE IF NOT EXISTS recipes (
    recipe_id SERIAL PRIMARY KEY,
-   products INT [],
+   name VARCHAR(255) UNIQUE NOT NULL,
+   product_id INT [],
    recipe_original_price DECIMAL NOT NULL,
    recipe_discounted_price DECIMAL NOT NULL,
    promotion_id INT,
