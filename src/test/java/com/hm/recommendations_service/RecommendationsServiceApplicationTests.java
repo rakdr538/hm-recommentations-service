@@ -1,7 +1,6 @@
 package com.hm.recommendations_service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.hm.recommendations_service.model.DAO.*;
 import com.hm.recommendations_service.model.DTO.requests.UserPreferences;
 import com.hm.recommendations_service.repository.*;
@@ -58,14 +57,14 @@ class RecommendationsServiceApplicationTests {
 	@Autowired
 	RecipeServiceImpl recipeService;
 
-    private ObjectWriter objectMapper;
+    @Autowired
+    ObjectMapper objectMapper;
 
     private MockMvc mockMvc;
 
     @BeforeEach
     void setup(WebApplicationContext wac) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-        objectMapper = new ObjectMapper().writer().withDefaultPrettyPrinter();
     }
 
     @Test
@@ -112,7 +111,7 @@ class RecommendationsServiceApplicationTests {
 		Assertions.assertEquals(7 ,allProducts.size());
 
 		var halloweenProducts = allProducts.stream()
-				.filter(p -> p.getOccasion().contains(halloweenInSwe))
+				.filter(p -> p.getOccasions().contains(halloweenInSwe))
 						.toList();
 
 		// building DB for recipe
@@ -125,7 +124,7 @@ class RecommendationsServiceApplicationTests {
 		var winterOccasion = occasions.stream()
 				.filter(o -> o.getSeason().equals("Winter")).toList();
 		var winterProducts = allProducts.stream()
-				.filter(p -> p.getOccasion().containsAll(winterOccasion))
+				.filter(p -> p.getOccasions().containsAll(winterOccasion))
 				.toList();
 		var winterRecipeForKids = recipeService.create("Winter clothes for kids in Sweden",
 				winterProducts,
@@ -134,8 +133,7 @@ class RecommendationsServiceApplicationTests {
 
         var userPref = UserPreferences.builder()
                 .age(34)
-                .gender("Male")
-                .budget(2000F)
+                .gender("male")
                 .eventType("Halloween")
                 .build();
 
@@ -164,8 +162,8 @@ class RecommendationsServiceApplicationTests {
 
 		kidsVariations.forEach(kv -> kidsChristmasProducts.add(Product.builder()
 				.variation(kv)
-				.category(List.of(kidsCat))
-				.occasion(List.of(christmas))
+				.categories(List.of(kidsCat))
+				.occasions(List.of(christmas))
 				.discountedPrice(kv.getOriginalPrice())
 				.inStock(kv.getSku() > 0)
 				.build()));
@@ -189,8 +187,8 @@ class RecommendationsServiceApplicationTests {
 
         adultVariations.forEach(av -> adultHalloweenProductsInSweden.add(Product.builder()
                 .variation(av)
-                .category(List.of(adultCat))
-                .occasion(List.of(halloweenInSwe))
+                .categories(List.of(adultCat))
+                .occasions(List.of(halloweenInSwe))
                 .discountedPrice(av.getOriginalPrice())
                 .inStock(av.getSku() > 0)
                 .build()));

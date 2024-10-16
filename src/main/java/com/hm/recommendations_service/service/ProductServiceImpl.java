@@ -1,5 +1,6 @@
 package com.hm.recommendations_service.service;
 
+import com.hm.recommendations_service.model.DAO.Product;
 import com.hm.recommendations_service.model.DTO.requests.UserPreferences;
 import com.hm.recommendations_service.model.DTO.responses.ProductResponseDto;
 import com.hm.recommendations_service.repository.ProductRepo;
@@ -16,5 +17,10 @@ public class ProductServiceImpl implements ProductService{
 
     public List<ProductResponseDto> getProducts(UserPreferences userPreferences) {
         return null;
+    }
+
+    @Override
+    public List<Product> getAll() {
+        return productRepo.findAll();
     }
 }

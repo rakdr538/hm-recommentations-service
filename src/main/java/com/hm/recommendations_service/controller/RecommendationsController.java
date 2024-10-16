@@ -20,7 +20,7 @@ public class RecommendationsController {
     private final GetRecipesAndProductsAsPerUserRequestUseCase getRecipesAndProductsAsPerUserRequest;
 
     @PostMapping("/recommendations")
-    public ResponseEntity<List<UserPreferenceResponseDto>> recommendations(
+    public ResponseEntity<UserPreferenceResponseDto> recommendations(
             @Valid @RequestBody UserPreferences userPreferences) {
         return ResponseEntity.ok().body(getRecipesAndProductsAsPerUserRequest.getProducts(userPreferences));
     }

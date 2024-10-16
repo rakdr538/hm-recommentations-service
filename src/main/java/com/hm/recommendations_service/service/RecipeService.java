@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RecipeService {
     Recipe create(String recipeName, List<Product> products, Occasion occasion);
+
+    List<Recipe> getAll();
 }

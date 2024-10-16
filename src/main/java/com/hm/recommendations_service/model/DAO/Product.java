@@ -25,11 +25,11 @@ public class Product {
     @NotNull
     @Column(name = "category_id")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoryId", orphanRemoval = true)
-    private List<Category> category = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     @Column(name = "occasion_id")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "occasionId", orphanRemoval = true)
-    private List<Occasion> occasion = new ArrayList<>();
+    private List<Occasion> occasions = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn

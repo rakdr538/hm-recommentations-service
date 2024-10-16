@@ -37,4 +37,9 @@ public class RecipeServiceImpl implements RecipeService{
                 .occasion(occasion)
                 .build());
     }
+
+    @Override
+    public List<Recipe> getAll() {
+        return recipeRepo.findAll();
+    }
 }
