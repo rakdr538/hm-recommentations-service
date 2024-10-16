@@ -19,3 +19,55 @@ Product_category: clothes -> t-shirt or jeans or pants or skirts
 Disadvantages: filtering for size or colour is available.
 
 
+sample output:
+{
+	"productResponseDtos": [{
+		"productName": "socks",
+		"originalPrice": 199.0,
+		"discountedPrice": 199.0,
+		"inStock": true,
+		"description": null
+	}, {
+		"productName": "pants",
+		"originalPrice": 599.0,
+		"discountedPrice": 599.0,
+		"inStock": true,
+		"description": null
+	}, {
+		"productName": "Monster Dress",
+		"originalPrice": 1599.0,
+		"discountedPrice": 1599.0,
+		"inStock": true,
+		"description": null
+	}, {
+		"productName": "Spider-man Dress",
+		"originalPrice": 1599.0,
+		"discountedPrice": 1599.0,
+		"inStock": true,
+		"description": null
+	}],
+	"recipeResponseDtos": [{
+		"recipeName": "Winter clothes for kids in Sweden",
+		"originalPrice": 1397.0,
+		"discountedPrice": 1397.0,
+		"productResponseDtos": [{
+			"productName": "socks",
+			"originalPrice": 199.0,
+			"discountedPrice": 199.0,
+			"inStock": true,
+			"description": null
+		}, {
+			"productName": "pants",
+			"originalPrice": 599.0,
+			"discountedPrice": 599.0,
+			"inStock": true,
+			"description": null
+		}, {
+			"productName": "shirt",
+			"originalPrice": 599.0,
+			"discountedPrice": 599.0,
+			"inStock": true,
+			"description": null
+		}]
+	}]
+}
