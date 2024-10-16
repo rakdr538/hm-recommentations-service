@@ -26,56 +26,25 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GetRecipesAndProductsAsPerUserRequestUseCase {
 
-    private final RecipeRepo recipeRepo;
+    private final RecipeService recipeService;
     private final ProductService productService;
-    private final OccasionRepo occasionRepo;
-    private final DemographicRepo demographicRepo;
-    private final CountryRepo countryRepo;
-    private final CategoryRepo categoryRepo;
 
     @Transactional
     public UserPreferenceResponseDto getProducts(@Valid UserPreferences userPreferences) {
 
-        // TODO using brut force, need to use criteria builder here.
+        var products = productService.getMatchingProducts(userPreferences.getAge(),
+                userPreferences.getGender(),
+                userPreferences.getSeasonalStyles(),
+                userPreferences.getCountryCode(),
+                userPreferences.getEventType());
 
-        var occasions = new ArrayList<Occasion>();
-        if(isString(userPreferences.getCountryCode())) {
-            var c = countryRepo.findByCountryCode(userPreferences.getCountryCode());
-            occasions.addAll(occasionRepo.findAll().stream().filter( o -> o.getCountries().contains(c)).toList());
-        }
-        if(isValidSet(userPreferences.getSeasonalStyles())) {
-            occasions.addAll(occasionRepo.findAllBySeasonIn(userPreferences.getSeasonalStyles()));
-        }
-        if(isString(userPreferences.getEventType())) {
-            occasions.addAll(occasionRepo.findAllByName(userPreferences.getEventType()));
-        }
-
-        var demographics = demographicRepo.getByGivenAgeAndGender(userPreferences.getAge(), userPreferences.getGender());
-        var categories = categoryRepo.findAll().stream()
-                .filter(cat -> !CollectionUtils.isEmpty(cat.getDemographics())
-                        && new ArrayList<>(cat.getDemographics()).containsAll(demographics))
-                .toList();
-
-        var products = productService.getAll().stream()
-                .filter(p -> new ArrayList<>(p.getOccasions()).containsAll(occasions)
-                        || new ArrayList<>(p.getCategories()).containsAll(categories)).toList();
-
-        var recipes = recipeRepo.findAllByOccasionIn(occasions);
+        var recipes = recipeService.getMatchingRecipes(userPreferences.getEventType(),
+                userPreferences.getSeasonalStyles(),
+                userPreferences.getCountryCode());
 
         return UserPreferenceResponseDto.builder()
                 .productResponseDtos(products.stream().map(ProductMapper::mapProductsToDto).toList())
                 .recipeResponseDtos(recipes.stream().map(RecipeMapper::mapRecipeToDto).toList())
                 .build();
-    }
-
-    private boolean isValidSet(Collection<String> set) {
-        if(CollectionUtils.isEmpty(set)){
-            return false;
-        }
-        return !CollectionUtils.isEmpty(set.stream().filter(this::isString).collect(Collectors.toSet()));
-    }
-
-    private boolean isString(String s) {
-        return StringUtils.hasText(s);
     }
 }

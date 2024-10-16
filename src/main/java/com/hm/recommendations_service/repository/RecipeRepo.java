@@ -11,4 +11,6 @@ import java.util.List;
 public interface RecipeRepo extends JpaRepository<Recipe, Integer> {
 
     List<Recipe> findAllByOccasionIn(List<Occasion> occasions);
+
+    Recipe findByOccasion(Occasion occasion);
 }

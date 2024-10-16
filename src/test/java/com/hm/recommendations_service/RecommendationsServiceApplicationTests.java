@@ -143,8 +143,6 @@ class RecommendationsServiceApplicationTests {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        System.out.println("Result: " + result.getResponse().getContentAsString());
-
     }
 
 	private List<Product> getKidsChristmasProducts(List<Variation> variations,

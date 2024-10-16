@@ -11,12 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService{
 
     private final RecipeRepo recipeRepo;
+    private final OccasionService occasionService;
 
     @Transactional
     @Override
@@ -41,5 +43,11 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public List<Recipe> getAll() {
         return recipeRepo.findAll();
+    }
+
+    @Override
+    public List<Recipe> getMatchingRecipes(String eventType, Set<String> seasonalStyles, String countryCode) {
+        var occasions = occasionService.getOccasions(countryCode, seasonalStyles, eventType);
+        return recipeRepo.findAllByOccasionIn(occasions);
     }
 }
