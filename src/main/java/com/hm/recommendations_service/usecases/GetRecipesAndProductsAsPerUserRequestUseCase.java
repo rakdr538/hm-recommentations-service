@@ -51,7 +51,10 @@ public class GetRecipesAndProductsAsPerUserRequestUseCase {
         }
 
         var demographics = demographicRepo.getByGivenAgeAndGender(userPreferences.getAge(), userPreferences.getGender());
-        var categories = categoryRepo.findAll().stream().filter(cat -> new ArrayList<>(cat.getDemographics()).containsAll(demographics)).toList();
+        var categories = categoryRepo.findAll().stream()
+                .filter(cat -> !CollectionUtils.isEmpty(cat.getDemographics())
+                        && new ArrayList<>(cat.getDemographics()).containsAll(demographics))
+                .toList();
 
         var products = productService.getAll().stream()
                 .filter(p -> new ArrayList<>(p.getOccasions()).containsAll(occasions)
